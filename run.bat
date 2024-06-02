@@ -2,7 +2,12 @@ REM Set Window Parameters ----------------------------------
 @echo off
 cd /d "%~dp0"
 TITLE ME Installation Tool
+call :checkWindowsVersion
+if /I "%version%" EQU "10.0" (
 mode con: cols=221 lines=60
+) else (
+mode con: cols=221 lines=78
+)
 nircmd win center ititle "ME Installation Tool"
 
 REM Initialize and Set Variables ---------------------------
@@ -52,12 +57,17 @@ set op= All requirements have been met. Press any key to continue with the insta
 call :clearScreen
 pause >nul
 
-REM CHOOSE MODULES TO INSTALL
+REM CHOOSE MODULES TO INSTALL -------------------------------
 
+
+
+REM Start loading animation----------------------------------
 set dance=1
 call :clearScreen
 start dance.bat
-
+if /I "%version%" NEQ "10.0" (
+nircmd.exe win move ititle "Administrator: Dance Shepard, dance..." 0 100
+)
 REM INSTALLATION INSTRUCTIONS
 
 
@@ -186,6 +196,10 @@ sleep 1
 call :download
 )
 
+REM Installation Functions----------------------------------
+REM MEUITM
+"E:\Documents\Games\ME\MEUITM12062014\MEUITM.exe"
+
 
 REM ---------------------------------------------------------
 :cleanup
@@ -224,6 +238,16 @@ echo(
 echo(
 echo(
 echo(
+if /I "%version%" NEQ "10.0" (
+echo(
+echo(
+echo(
+echo(
+echo(
+echo(
+echo(
+echo(
+)
 )
 echo %spacing%%op%
 if "%lc%" EQU "1" (
